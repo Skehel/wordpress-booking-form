@@ -1,5 +1,6 @@
 <?php
 
+namespace BookingForm\Tables;
 
 class EventsTable extends Table {
 
