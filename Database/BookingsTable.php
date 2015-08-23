@@ -1,6 +1,6 @@
 <?php
 
-namespace BookingForm\Tables;
+namespace BookingForm\Database;
 
 
 class BookingsTable extends Table {

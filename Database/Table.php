@@ -1,9 +1,9 @@
 <?php
 
-namespace BookingForm\Tables;
+namespace BookingForm\Database;
 
 /**
- * Generic abstract class for interacting with Tables in the database
+ * Generic abstract class for interacting with Database in the database
  */
 abstract class Table {
 
