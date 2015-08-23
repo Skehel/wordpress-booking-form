@@ -1,0 +1,9 @@
+formatter.name: pretty
+
+suites:
+  service_suite:
+    namespace: BookingForm\Services
+    psr4_prefix: BookingForm\Services
+    src_path: Services
+    spec_path: spec
+    spec_prefix: services
