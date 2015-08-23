@@ -9,54 +9,41 @@ Author URI: http://timskehel.com
 License: TODO
 */
 
+/**
+ * A simple PSR-4 Autoloader
+ * Copied from http://www.php-fig.org/psr/psr-4/examples/
+ * @param string $class The fully-qualified class name.
+ * @return void
+ */
+spl_autoload_register(function ($class) {
+    $prefix = 'BookingForm\\';
+
+    $base_dir = __DIR__.'/';
+
+    //move on to next autoloader if class does not use prefix
+    $len = strlen($prefix);
+    if (strncmp($prefix, $class, $len) !== 0) {
+        return;
+    }
+
+    // get the relative class name
+    $relative_class = substr($class, $len);
+
+    // replace the namespace prefix with the base directory, replace namespace
+    // separators with directory separators in the relative class name, append
+    // with .php
+    $file = $base_dir . str_replace('\\', '/', $relative_class) . '.php';
+
+    // if the file exists, require it
+    if (file_exists($file)) {
+        require $file;
+    }
+});
+
+
 register_activation_hook( __FILE__, 'setup' );
 
 function setup()
 {
-    create_events_table();
-    create_bookings_table();
-}
-
-function create_events_table()
-{
-    if(check_table_exists('bf_events')) {
-        $create = "CREATE TABLE `bf_events` (
-        `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-        `time` datetime NOT NULL,
-        `name` varchar(25) DEFAULT NULL,
-        `location` varchar(100) DEFAULT NULL,
-        `price` decimal(10,0) DEFAULT NULL,
-        `capacity` int(11) DEFAULT NULL,
-        PRIMARY KEY (`id`)
-        )";
-        global $wpdb;
-        $wpdb->query($create);
-    }
-    //TODO if not check schema matches, then continue, throw error or ask for different prefix
-
-}
-
-function create_bookings_table()
-{
-    if(check_table_exists('bf_bookings')) {
-        $create = "CREATE TABLE `bf_bookings` (
-        `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-        `event_id` int(11) DEFAULT NULL,
-        `name` varchar(50) DEFAULT NULL,
-        `phone` varchar(15) DEFAULT NULL,
-        `email` varchar(50) DEFAULT NULL,
-        `people` int(11) DEFAULT NULL,
-        `date_booked` datetime DEFAULT NULL,
-        PRIMARY KEY (`id`)
-        )";
-        global $wpdb;
-        $wpdb->query($create);
-    }
-    //TODO if not check schema matches, then continue, throw error or ask for different prefix
-}
-
-function check_table_exists($table_name)
-{
-    global $wpdb;
-    return $wpdb->get_var("SHOW TABLES LIKE '$table_name'") != $table_name;
+    $schema = new \BookingForm\Database\Schema();
 }
