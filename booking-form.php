@@ -9,7 +9,7 @@ Author URI: http://timskehel.com
 License: TODO
 */
 
-require(__DIR__.'/Autoloader.php');
+require(__DIR__.'/vendor/autoload.php');
 register_activation_hook( __FILE__, 'setup' );
 
 function setup()

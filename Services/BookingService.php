@@ -3,7 +3,7 @@
 namespace BookingForm\Models;
 
 
-use BookingForm\Tables\BookingsTable;
+use BookingForm\Database\BookingsTable;
 
 class BookingService extends AccessorService {
 
